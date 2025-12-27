@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile Form</title>
+    <style>
+        
+        :root {
+            --moss: #5a7d5a;
+            --forest: #3a5a3a;
+            --clay: #a67c52;
+            --sand: #d9c7b8;
+            --stone: #8a7f68;
+            --soil: #6b5b3d;
+            --leaf: #8fa389;
+            --pale: #f5f1e8;
+            --charcoal: #2c2c2c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--pale);
+            color: var(--charcoal);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(139, 115, 85, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(90, 125, 90, 0.05) 0%, transparent 20%);
+        }
+        
+        .paper {
+            background: white;
+            border-radius: 2px;
+            box-shadow: 
+                0 2px 5px rgba(0,0,0,0.1),
+                0 5px 15px rgba(0,0,0,0.05),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            padding: 40px 35px;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            border: 1px solid rgba(139, 115, 85, 0.2);
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.9) 0%, rgba(245,241,232,0.7) 100%);
+        }
+        
+        .paper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--moss), var(--clay));
+            border-radius: 2px 2px 0 0;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed var(--stone);
+            position: relative;
+        }
+        
+        .header::after {
+            content: '✎';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--pale);
+            padding: 0 10px;
+            color: var(--stone);
+            font-size: 14px;
+        }
+        
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--forest);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            color: var(--soil);
+            font-size: 15px;
+            font-style: italic;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--forest);
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--sand);
+            border-radius: 3px;
+            font-size: 16px;
+            font-family: 'Georgia', serif;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--charcoal);
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--moss);
+            box-shadow: 
+                0 0 0 2px rgba(90, 125, 90, 0.1),
+                inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to bottom, var(--moss), var(--forest));
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 3px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-family: 'Georgia', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 5px rgba(58, 90, 58, 0.3);
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(58, 90, 58, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .required {
+            color: #b85c5c;
+        }
+        
+        .hint {
+            font-size: 13px;
+            color: var(--stone);
+            margin-top: 4px;
+            display: block;
+            font-style: italic;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--stone);
+            color: var(--stone);
+            font-size: 13px;
+        }
+        
+        .hand-drawn {
+            position: absolute;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .hand-drawn-1 {
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--leaf);
+            border-radius: 50%;
+            transform: rotate(15deg);
+        }
+        
+        .hand-drawn-2 {
+            bottom: 20px;
+            left: 20px;
+            width: 25px;
+            height: 25px;
+            border: 2px solid var(--clay);
+            border-radius: 50%;
+            transform: rotate(-10deg);
+        }
+        
+        .hand-drawn-3 {
+            bottom: 40px;
+            right: 30px;
+            width: 30px;
+            height: 15px;
+            border: 2px solid var(--moss);
+            border-radius: 50%;
+            transform: rotate(5deg);
+        }
+        
+        @media (max-width: 600px) {
+            .paper {
+                padding: 30px 25px;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+        }
+        
+        
+        .form-group {
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+        .form-group:nth-child(6) { animation-delay: 0.6s; }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+      
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .view-profiles-btn {
+            background: linear-gradient(to bottom, var(--clay), var(--soil));
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 3px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-family: 'Georgia', serif;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(166, 124, 82, 0.3);
+        }
+        
+        .view-profiles-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(166, 124, 82, 0.4);
+        }
+        
+        .error-message {
+            background-color: rgba(184, 92, 92, 0.1);
+            color: #b85c5c;
+            padding: 10px;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            border-left: 4px solid #b85c5c;
+            display: none;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Georgia&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="paper">
+        <div class="hand-drawn hand-drawn-1"></div>
+        <div class="hand-drawn hand-drawn-2"></div>
+        <div class="hand-drawn hand-drawn-3"></div>
+        
+        <div class="header">
+            <h1 class="title">Student Profile</h1>
+            <p class="subtitle">Share a little about yourself</p>
+        </div>
+        
+        
+        <div class="error-message" id="errorMessage"></div>
+        
+      
+        <form action="ProfileServlet" method="post" id="profileForm">
+            <div class="form-group">
+                <label for="name">Full Name <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <input type="text" id="name" name="name" required placeholder="Your full name">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="studentId">Student ID <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <input type="text" id="studentId" name="studentId" required placeholder="Your student ID">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="program">Program <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <input type="text" id="program" name="program" required placeholder="Your program of study">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <input type="email" id="email" name="email" required placeholder="Your email address">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="hobbies">Hobbies & Interests</label>
+                <div class="input-wrapper">
+                    <textarea id="hobbies" name="hobbies" placeholder="What do you enjoy doing in your free time? (separate with commas)"></textarea>
+                </div>
+                <span class="hint">For example: reading, hiking, photography, cooking</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="introduction">About You</label>
+                <div class="input-wrapper">
+                    <textarea id="introduction" name="introduction" placeholder="Tell us a bit about yourself, your interests, and aspirations..."></textarea>
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">
+                Save Profile
+            </button>
+            
+           
+            <div class="action-buttons">
+                <a href="ProfileServlet" class="view-profiles-btn">
+                    View All Profiles →
+                </a>
+            </div>
+        </form>
+        
+        <div class="footer">
+            <p>NUR ANISSA SYUHADA | 2025182621 | Individual Assignment 2</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input, textarea');
+            const form = document.getElementById('profileForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Input focus effects
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+                });
+            });
+            
+            // Form validation and submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Clear previous errors
+                errorMessage.style.display = 'none';
+                errorMessage.textContent = '';
+                
+                // Basic validation
+                const name = document.getElementById('name').value.trim();
+                const studentId = document.getElementById('studentId').value.trim();
+                const program = document.getElementById('program').value.trim();
+                const email = document.getElementById('email').value.trim();
+                
+                let isValid = true;
+                let errorMsg = '';
+                
+                if (!name) {
+                    errorMsg += '• Full Name is required\n';
+                    isValid = false;
+                }
+                
+                if (!studentId) {
+                    errorMsg += '• Student ID is required\n';
+                    isValid = false;
+                }
+                
+                if (!program) {
+                    errorMsg += '• Program is required\n';
+                    isValid = false;
+                }
+                
+                if (!email) {
+                    errorMsg += ' Email is required\n';
+                    isValid = false;
+                } else if (!isValidEmail(email)) {
+                    errorMsg += 'Please enter a valid email address\n';
+                    isValid = false;
+                }
+                
+                if (!isValid) {
+                    errorMessage.textContent = errorMsg;
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+                
+               
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Saving...';
+                submitBtn.disabled = true;
+                
+                
+                setTimeout(() => {
+                    
+                    form.submit();
+                }, 500);
+            });
+            
+           
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+            
+           
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            if (error) {
+                errorMessage.textContent = decodeURIComponent(error);
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
